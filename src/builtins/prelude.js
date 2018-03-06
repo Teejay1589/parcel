@@ -42,7 +42,15 @@ require = (function (modules, cache, entry) {
       modules[name][0].call(module.exports, localRequire, module, module.exports);
     }
 
-    return cache[name].exports;
+    var exported = cache[name].exports;
+
+    // if module.exports === function() {}
+    if(typeof exported === 'function') {
+      // mark functions as ES modules so they don't get copied when imported using a wildcard
+      exported.__esModule = true;
+    }
+
+    return exported;
 
     function localRequire(x){
       return newRequire(localRequire.resolve(x));

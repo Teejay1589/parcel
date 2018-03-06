@@ -711,4 +711,42 @@ describe('javascript', function() {
 
     assert.deepEqual(output, err);
   });
+
+  it('should import ES6-exported functions using wildcard imports', async function() {
+    let b = await bundle(__dirname + '/integration/interop-wildcard-functions/es6/index.js');
+
+    assertBundleTree(b, {
+      name: 'index.js',
+      assets: ['export.js', 'index.js'],
+      childBundles: [
+        {
+          type: 'map'
+        }
+      ]
+    });
+
+    let output = run(b);
+
+    assert(typeof output === 'function')
+    assert(output() === 'test passed')
+  });
+
+  it('should import CommonJS-exported functions using wildcard imports', async function() {
+    let b = await bundle(__dirname + '/integration/interop-wildcard-functions/commonjs/index.js');
+
+    assertBundleTree(b, {
+      name: 'index.js',
+      assets: ['export.js', 'index.js'],
+      childBundles: [
+        {
+          type: 'map'
+        }
+      ]
+    });
+
+    let output = run(b);
+
+    assert(typeof output === 'function')
+    assert(output() === 'test passed')
+  });
 });
