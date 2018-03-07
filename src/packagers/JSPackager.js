@@ -58,20 +58,20 @@ class JSPackager extends Packager {
 
         bundles.push(mod.id);
         deps[dep.name] = bundles;
-        this.bundleLoaders.add(mod.type);
+        // this.bundleLoaders.add(mod.type);
       } else {
         deps[dep.name] = this.dedupe.get(mod.generated.js) || mod.id;
 
         // If the dep isn't in this bundle, add it to the list of external modules to preload.
         // Only do this if this is the root JS bundle, otherwise they will have already been
         // loaded in parallel with this bundle as part of a dynamic import.
-        if (
-          !this.bundle.assets.has(mod) &&
-          (!this.bundle.parentBundle || this.bundle.parentBundle.type !== 'js')
-        ) {
-          this.externalModules.add(mod);
-          this.bundleLoaders.add(mod.type);
-        }
+        // if (
+        //   !this.bundle.assets.has(mod) &&
+        //   (!this.bundle.parentBundle || this.bundle.parentBundle.type !== 'js')
+        // ) {
+        //   this.externalModules.add(mod);
+        //   this.bundleLoaders.add(mod.type);
+        // }
       }
     }
 
